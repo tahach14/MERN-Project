@@ -1,5 +1,4 @@
 const userModel = require("../models/userModel");
-// const {models}=require("../models/index");
 const {v4:uuid}= require("uuid");
 const {hash} = require("bcryptjs");
 
@@ -65,11 +64,9 @@ createUser:async(body)=>{
             username:body.username,
             password:await hash(body.password,10),
             roleId:body.roleId,
-            // addressId:createdAddress.response?.dataValues.addressId||"",
             addressId:address.addressId,
         };
         const createdUser=await userModel.createUser(user);
-        // const existinguser= await models.users.findOne({where:{username:body.username}});
         if(createdUser.error){
             return{
                 error:createdUser.error
@@ -85,7 +82,6 @@ response:createdUser.response,
     }
 }
 },
-
 
 getUser:async()=>{
     try{
@@ -143,53 +139,4 @@ recoverUser:async()=>{
         };
     }
 },
-
-
 };
-// const users=[{id:1,email:"tahachughtai14@gmail.com"},{id:2,email:"hamzaqayyum13@gmail.com"},
-// {id:3,email:"logodesignbytc@gmail.com"}];
-// const bcrypt = require("bcryptjs");
-// module.exports={
-//     signup:async(validate)=>{
-//         try{
-//             // const existinguser=await users.find(user=>user.email===validate.email);
-            // const existinguser= users.find(({email})=>email===validate.email);
-//             if(existinguser){
-//                 return {
-//                     response:"email is already registered"
-//                 }
-//             }
-//             validate.password =  await bcrypt.hash(validate.password,10)
-//             const newuser = validate;
-//             users.push(newuser.email);
-//             return{
-//                 response:"user created sucessfully",
-//                 NewUser:newuser
-//             }
-//         }catch(error){
-//             return{
-//                 error: error.message
-//             }
-//         }
-//     },
-//     deleteuser: async(userId)=>{
-//         try{
-//             const userIndex=users.findIndex(user=>user.id==userId)
-            
-//             if(userIndex === -1){
-//                 return{
-//                     response:"user not found"
-//                 }
-//             }
-//             users.splice(userIndex,1);
-//             return{
-//                 response:"user deleted sucessfully",
-//                 remainingusers:users
-//             }
-//         }catch(error){
-//             return{
-//                 error:error.message
-//             }
-//         }
-//     }
-// }
